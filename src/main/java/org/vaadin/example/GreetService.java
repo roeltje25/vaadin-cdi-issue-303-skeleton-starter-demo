@@ -1,11 +1,11 @@
 package org.vaadin.example;
 
-import com.vaadin.cdi.annotation.VaadinSessionScoped;
+import com.vaadin.cdi.annotation.UIScoped;
 
 /**
  * Data provider bean scoped for each user session.
  */
-@VaadinSessionScoped
+@UIScoped
 public class GreetService {
 
     public String greet(String name) {

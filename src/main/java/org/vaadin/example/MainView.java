@@ -10,12 +10,13 @@ import com.vaadin.flow.router.Route;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-
+import com.vaadin.cdi.annotation.RouteScoped;
 /**
  * The main view contains a text field for getting the user name and a button
  * that shows a greeting message in a notification.
  */
 @Route("")
+@RouteScoped
 public class MainView extends VerticalLayout {
 
     @Inject
