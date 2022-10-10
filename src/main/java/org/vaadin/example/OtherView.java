@@ -17,32 +17,30 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouterLink;
 
 /**
  * The main view contains a text field for getting the user name and a button
  * that shows a greeting message in a notification.
  */
-@Route(value = "", layout = ParentLayout.class)
+@Route(value = "other", layout = ParentLayout.class)
 @CdiComponent
 @RouteScoped
-public class MainView extends VerticalLayout implements BeforeEnterObserver
+public class OtherView extends VerticalLayout implements BeforeEnterObserver
 {
-    private static final Logger logger = Logger.getLogger( MainView.class.getCanonicalName( ) );
+    private static final Logger logger = Logger.getLogger( OtherView.class.getCanonicalName( ) );
+    private static final long serialVersionUID = 63096061475150887L;
+
     static volatile long instantiated = 0;
 
     @Inject
-    @RouteScopeOwner(ParentLayout.class)
-    private GreetService1 greetService;
-
+    @RouteScopeOwner(OtherView.class)
+    private GreetService2 greetService;
     @Inject
     Event<Bleep> bleeps;
 
     @Override
     public void beforeEnter(BeforeEnterEvent event)
     {
-        logger.info( "Sending bleep" );
-        bleeps.fire( Bleep.INSTANCE );
         greetService.getInstantiated( );
     }
 
@@ -71,8 +69,13 @@ public class MainView extends VerticalLayout implements BeforeEnterObserver
         // Use custom CSS classes to apply styling. This is defined in
         // shared-styles.css.
         addClassName( "centered-content" );
-
-        add( textField, button, new RouterLink( "to other", OtherView.class ) );
+        Button navButton = new Button( "to main" );
+        navButton.addClickListener( e -> {
+            logger.info( "Sending bleep" );
+            bleeps.fire( Bleep.INSTANCE );
+            getUI( ).get( ).navigate( "" );
+        } );
+        add( textField, button, navButton );
     }
 
 }
